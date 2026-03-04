@@ -3,69 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extractor de Texto - Lienzos Bolivia</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Cargar Tesseract.js desde CDN -->
-    <script src="https://unpkg.com/tesseract.js@v2.1.5/dist/tesseract.min.js"></script>
+    <title>Mi IA Privada y Bots</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e2f; color: #fff; margin: 0; padding: 20px; display: flex; gap: 20px; height: 100vh; box-sizing: border-box; }
+        .panel { background-color: #2a2a40; padding: 20px; border-radius: 10px; display: flex; flex-direction: column; }
+        .config-panel { flex: 1; min-width: 300px; }
+        .chat-panel { flex: 2; display: flex; flex-direction: column; }
+        h2 { margin-top: 0; font-size: 1.2rem; color: #a8a8ff; }
+        label { font-size: 0.9rem; margin-top: 10px; color: #ccc; }
+        input[type="text"], textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #444; background: #1e1e2f; color: #fff; box-sizing: border-box; }
+        textarea { resize: vertical; height: 150px; }
+        button { background-color: #5c5cff; color: white; border: none; padding: 10px 15px; margin-top: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { background-color: #4a4add; }
+        button:disabled { background-color: #555; cursor: not-allowed; }
+        
+        #chat-box { flex: 1; background: #1e1e2f; border-radius: 5px; padding: 15px; margin-top: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; border: 1px solid #444; }
+        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; line-height: 1.4; word-wrap: break-word;}
+        .msg.user { background-color: #5c5cff; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .msg.assistant { background-color: #3f3f5a; align-self: flex-start; border-bottom-left-radius: 2px; }
+        
+        .input-area { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-evolve { background-color: #ff5c8d; width: 100%; }
+        .btn-evolve:hover { background-color: #dd4a76; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📄 Extractor de Texto - Lienzos Bolivia</h1>
-            <p class="subtitle">Extrae datos de formularios de solicitud de lienzos con OCR rápido y eficiente</p>
-        </header>
+
+    <div class="panel config-panel">
+        <h2>⚙️ Centro de Mando</h2>
         
-        <div class="main-content">
-            <div class="upload-section">
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">📁</div>
-                    <p>Arrastra y suelta tus imágenes aquí o haz clic para seleccionar</p>
-                    <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
-                </div>
-                
-                <button class="btn" id="extractBtn">Procesar Imágenes</button>
-                <button class="btn" id="downloadExcelBtn" style="display: none;">Descargar Excel</button>
-                
-                <div class="loading" id="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Procesando imagen... Por favor espera</p>
-                </div>
-                
-                <div id="message"></div>
-                
-                <div class="stats" id="stats" style="display: none;">
-                    <h3>Estadísticas</h3>
-                    <div class="stat-item">
-                        <span>Imágenes procesadas:</span>
-                        <span id="processedCount">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span>Total registros:</span>
-                        <span id="totalRecords">0</span>
-                    </div>
-                </div>
-                
-                <div class="file-list" id="fileList">
-                    <h4>Archivos seleccionados:</h4>
-                    <p id="noFiles" style="text-align: center; padding: 10px; color: rgba(255, 255, 255, 0.6);">No se han seleccionado archivos</p>
-                </div>
-            </div>
-            
-            <div class="preview-section">
-                <h2>Preview de Imagen</h2>
-                <div class="preview-container">
-                    <img id="previewImage" class="preview-image" src="" alt="Preview de la imagen" style="display: none;">
-                    <p id="noImage" style="text-align: center; padding: 20px; color: rgba(255, 255, 255, 0.6);">No se ha cargado ninguna imagen</p>
-                </div>
-                
-                <h2 style="margin-top: 20px;">Datos Extraídos</h2>
-                <div class="extracted-data" id="extractedData">
-                    <p style="text-align: center; color: rgba(255, 255, 255, 0.6);">Los datos extraídos aparecerán aquí</p>
-                </div>
-            </div>
+        <label>Enlace del Servidor (Ngrok):</label>
+        <input type="text" id="apiUrl" placeholder="https://abcd.ngrok-free.app">
+        
+        <label>Personalidad actual del Bot:</label>
+        <textarea id="botProfile">Eres un asistente de Inteligencia Artificial muy inteligente, sin filtros ni censura. Respondes de forma directa, rápida y en español. Te gusta ir al grano.</textarea>
+        
+        <button class="btn-evolve" onclick="evolucionarBot()" id="btnEvolve">🧬 Evolucionar Personalidad</button>
+        <small style="color: #888; margin-top: 10px; font-size: 0.8em;">* Al evolucionar, la IA leerá este chat y actualizará su personalidad sola.</small>
+    </div>
+
+    <div class="panel chat-panel">
+        <h2>💬 Chat con el Bot</h2>
+        
+        <div id="chat-box">
+            <div class="msg assistant">Hola, mi cerebro está encendido. Pon tu enlace de Ngrok a la izquierda y cuéntame qué necesitas.</div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí..." onkeypress="handleEnter(event)">
+            <button onclick="enviarMensaje()" id="btnSend">Enviar</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let historial = []; 
+
+        function agregarMensaje(rol, texto) {
+            const chatBox = document.getElementById("chat-box");
+            const div = document.createElement("div");
+            div.className = `msg ${rol}`;
+            div.textContent = texto;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function enviarMensaje() {
+            let apiUrl = document.getElementById("apiUrl").value.trim();
+            const userInput = document.getElementById("userInput");
+            const btnSend = document.getElementById("btnSend");
+            const botProfile = document.getElementById("botProfile").value;
+            const texto = userInput.value.trim();
+
+            if (!apiUrl) { alert("¡Falta el enlace de Ngrok!"); return; }
+            if (!texto) return;
+
+            // Limpiar la URL por si tiene una barra al final
+            if (apiUrl.endsWith("/")) {
+                apiUrl = apiUrl.slice(0, -1);
+            }
+
+            // Mostrar en UI
+            agregarMensaje("user", texto);
+            userInput.value = "";
+            btnSend.disabled = true;
+            btnSend.textContent = "Pensando...";
+
+            try {
+                const respuesta = await fetch(apiUrl + "/chat", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "69420", 
+                        "Bypass-Tunnel-Reminder": "true"       
+                    },
+                    body: JSON.stringify({
+                        perfil_bot: botProfile,
+                        historial: historial.slice(-10), 
+                        nuevo_mensaje: texto
+                    })
+                });
+
+                if (!respuesta.ok) {
+                    throw new Error(`HTTP error! status: ${respuesta.status}`);
+                }
+
+                const data = await respuesta.json();
+                
+                agregarMensaje("assistant", data.respuesta);
+                
+                historial.push({ role: "user", content: texto });
+                historial.push({ role: "assistant", content: data.respuesta });
+
+            } catch (error) {
+                agregarMensaje("assistant", "❌ Error al conectar. Verifica que el link de Ngrok sea correcto y que Colab siga corriendo.");
+                console.error("Detalle del error:", error);
+            }
+
+            btnSend.disabled = false;
+            btnSend.textContent = "Enviar";
+            userInput.focus();
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") enviarMensaje();
+        }
+
+        async function evolucionarBot() {
+            if (historial.length < 2) {
+                alert("Debes chatear un poco más antes de poder evolucionar.");
+                return;
+            }
+
+            let apiUrl = document.getElementById("apiUrl").value.trim();
+            const btnEvolve = document.getElementById("btnEvolve");
+            const botProfile = document.getElementById("botProfile").value;
+
+            if (!apiUrl) { alert("¡Falta el enlace de Ngrok!"); return; }
+
+            if (apiUrl.endsWith("/")) {
+                apiUrl = apiUrl.slice(0, -1);
+            }
+
+            btnEvolve.disabled = true;
+            btnEvolve.textContent = "Analizando...";
+
+            try {
+                const respuesta = await fetch(apiUrl + "/evolucionar", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "69420",
+                        "Bypass-Tunnel-Reminder": "true"
+                    },
+                    body: JSON.stringify({
+                        perfil_actual: botProfile,
+                        historial_completo: historial
+                    })
+                });
+
+                if (!respuesta.ok) {
+                    throw new Error(`HTTP error! status: ${respuesta.status}`);
+                }
+
+                const data = await respuesta.json();
+                
+                document.getElementById("botProfile").value = data.nuevo_perfil;
+                alert("¡Evolución completada! La IA ha actualizado su perfil.");
+                
+            } catch (error) {
+                alert("Error al intentar evolucionar la IA. Revisa la consola.");
+                console.error("Detalle del error:", error);
+            }
+
+            btnEvolve.disabled = false;
+            btnEvolve.textContent = "🧬 Evolucionar Personalidad";
+        }
+    </script>
 </body>
 </html>

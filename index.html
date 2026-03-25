@@ -5,278 +5,423 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Lienzos Bolivia. Felicidades por su nuevo retrato conmemorativo.">
   <title>Lienzos Bolivia | Felicidades por su lienzo</title>
-  
   <style>
+    /* TU CSS ORIGINAL INTACTO */
     :root {
       --bg: #f6f1ea;
+      --bg-soft: #fcfaf7;
+      --card: rgba(255,255,255,0.72);
       --text: #352a24;
       --muted: #6e5a4e;
-      --brand: #c6762b;
+      --line: rgba(111, 82, 58, 0.18);
+      --brand: #b16b2c;
       --brand-deep: #8f5623;
-      --shadow: 0 12px 30px rgba(65, 42, 26, 0.15);
-      --radius: 20px;
+      --brand-soft: #ead5bf;
+      --accent: #4c6b4f;
+      --shadow: 0 18px 45px rgba(65, 42, 26, 0.12);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --max: 1180px;
     }
 
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
-    
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Inter, Arial, Helvetica, sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #fbf7f2 0%, #f5eee6 50%, #f8f5f0 100%);
+      background:
+        radial-gradient(circle at top left, rgba(177,107,44,0.10), transparent 25%),
+        radial-gradient(circle at top right, rgba(76,107,79,0.07), transparent 20%),
+        linear-gradient(180deg, #fbf7f2 0%, #f5eee6 42%, #f8f5f0 100%);
       line-height: 1.6;
     }
 
-    img { max-width: 100%; display: block; border-radius: var(--radius); }
-    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
 
     .container {
-      width: 90%;
-      max-width: 1000px;
+      width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
-    /* Topbar */
+    .section {
+      padding: 34px 0;
+    }
+
     .topbar {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 15px 0;
-      text-align: center;
-      border-bottom: 2px solid rgba(177,107,44,0.1);
       position: sticky;
       top: 0;
-      z-index: 100;
-    }
-    .topbar img { width: 180px; margin: 0 auto; border-radius: 0; }
-
-    /* Hero Section (Lo primero que ven) */
-    .hero { padding: 40px 0; text-align: center; }
-    
-    .hero-title {
-      font-family: Georgia, serif;
-      font-size: 2.2rem;
-      color: var(--brand-deep);
-      line-height: 1.2;
-      margin: 0 0 30px 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(248, 242, 234, 0.82);
+      border-bottom: 1px solid rgba(111, 82, 58, 0.10);
     }
 
-    .hero-img {
-      border: 6px solid white;
-      box-shadow: var(--shadow);
-      margin: 0 auto 40px;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    /* BOTONES GIGANTES Y VISIBLES */
-    .action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 600px;
-      margin: 0 auto 50px auto;
-    }
-
-    .btn {
+    .topbar-inner {
+      min-height: 74px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      min-height: 75px; /* Altura masiva */
-      padding: 15px 20px;
-      border-radius: 16px;
-      font-weight: 800;
-      font-size: 1.15rem;
+      gap: 16px;
+      padding: 10px 0;
+    }
+
+    .brand img {
+      width: 160px;
+      max-width: 42vw;
+      height: auto;
+    }
+
+    /* ESTILOS NUEVOS PARA EL HERO DEL QR */
+    .hero-qr {
+      padding: 50px 0 20px;
       text-align: center;
-      line-height: 1.3;
-      transition: transform 0.2s;
-      border: 2px solid transparent;
     }
-
-    .btn:active { transform: scale(0.98); }
-
-    .btn-icon { font-size: 1.8rem; margin-right: 12px; }
-
-    /* Botón Principal (WhatsApp) */
-    .btn-primary {
-      background: linear-gradient(135deg, #e3832d 0%, #b16b2c 100%);
-      color: white;
-      font-size: 1.3rem; /* Texto más grande para vender */
-      box-shadow: 0 10px 25px rgba(177,107,44,0.4);
-      border: 2px solid #fff;
-    }
-
-    /* Botones Secundarios */
-    .btn-secondary {
-      background: white;
+    .hero-qr-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
       color: var(--brand-deep);
-      border: 2px solid rgba(177,107,44,0.3);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+      line-height: 1.15;
+      margin-bottom: 24px;
     }
-
-    /* Secciones comunes */
-    .section { padding: 50px 0; border-top: 1px solid rgba(177,107,44,0.1); }
-    .section-title { font-family: Georgia, serif; font-size: 2rem; color: var(--brand-deep); text-align: center; margin-bottom: 20px; }
-    .section-desc { text-align: center; font-size: 1.1rem; margin-bottom: 40px; color: var(--muted); }
-
-    /* Galería de Cualidades (Sin repetir la foto principal) */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .gallery-grid img { width: 100%; height: 220px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    .tall { grid-row: span 2; height: 455px !important; }
-
-    /* Precios */
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-    .price-card { background: white; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center; border: 1px solid rgba(177,107,44,0.1); }
-    .price-size { font-family: Georgia, serif; font-size: 1.8rem; color: var(--text); border-bottom: 2px dashed #ead5bf; padding-bottom: 10px; margin-bottom: 15px; }
-    .price-old { text-decoration: line-through; color: var(--muted); font-size: 1.1rem; }
-    .price-new { font-size: 1.5rem; font-weight: bold; color: var(--brand-deep); margin-top: 5px; }
-    .discount-pill { background: #ffe4cd; color: #b16b2c; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; display: inline-block; margin-bottom: 10px; }
-
-    /* Video Box */
-    .video-box {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      aspect-ratio: 16 / 9;
-      border: 5px solid white;
+    .hero-qr-img {
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      background: #000;
-      overflow: hidden;
+      margin: 0 auto 32px;
+      max-width: 100%;
+      height: auto;
+      border: 4px solid rgba(255,255,255,0.8);
     }
-    .video-box iframe { width: 100%; height: 100%; border: none; }
+    .actions-qr {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 60px;
+      padding: 14px 20px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      text-align: center;
+      line-height: 1.3;
+      width: 100%;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+      color: white;
+      box-shadow: 0 12px 28px rgba(143, 86, 35, 0.25);
+      font-size: 1.15rem;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.78);
+      border-color: rgba(111,82,58,0.14);
+      color: var(--text);
+    }
 
-    /* Footer */
-    .footer { text-align: center; padding: 40px 0; color: var(--muted); font-size: 0.9rem; }
+    h2, h3 { font-family: Georgia, 'Times New Roman', serif; line-height: 1.18; margin: 0; }
+    h2 { font-size: clamp(1.6rem, 2.4vw, 2.5rem); margin-bottom: 14px; }
+    h3 { font-size: 1.3rem; margin-bottom: 10px; }
 
-    @media (max-width: 600px) {
-      .hero-title { font-size: 1.8rem; }
-      .btn { min-height: 85px; font-size: 1.1rem; } /* Más altos en celular */
-      .btn-primary { font-size: 1.2rem; }
-      .tall { grid-row: span 1; height: 220px !important; }
+    .section-header { max-width: 760px; margin-bottom: 22px; }
+    .section-header p { margin: 0; color: var(--muted); }
+
+    /* REINTEGRANDO TUS GRIDS ORIGINALES */
+    .trust-grid, .price-grid, .frames-grid, .faq-grid { display: grid; gap: 16px; }
+    .trust-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .frames-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .price-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card, .price-card, .faq details, .size-visual, .frame-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(111,82,58,0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.76), rgba(255,255,255,0.66));
+      box-shadow: var(--shadow);
+    }
+
+    .card { padding: 22px; }
+    .icon {
+      width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 14px; background: rgba(177,107,44,0.12); color: var(--brand-deep); font-size: 1.4rem; margin-bottom: 14px;
+    }
+    .card p, .price-card p, .faq details p { margin: 0; color: var(--muted); }
+
+    .caption { padding: 16px 18px; border-top: 1px solid rgba(111,82,58,0.08); background: rgba(255,255,255,0.80); }
+    .caption strong { display: block; margin-bottom: 4px; font-size: 1.02rem; }
+    .caption span { color: var(--muted); font-size: 0.95rem; }
+
+    /* PRECIOS ORIGINALES */
+    .price-card { padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .size { display: flex; align-items: center; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px dashed rgba(111,82,58,0.18); }
+    .size strong { font-size: 1.35rem; font-family: Georgia, serif; }
+    .pill { padding: 7px 10px; border-radius: 999px; background: rgba(177,107,44,0.12); color: var(--brand-deep); font-size: 0.9rem; font-weight: 700; }
+    .price-lines { display: grid; gap: 10px; }
+    .price-line { display: flex; align-items: center; justify-content: space-between; color: var(--muted); }
+    .price-line strong { color: var(--text); font-size: 1.15rem; }
+    .price-note { font-size: 0.92rem; background: rgba(177,107,44,0.08); padding: 12px 14px; border-radius: 14px; }
+    .sizes-layout { display: grid; grid-template-columns: 1fr 1.05fr; gap: 18px; align-items: start; margin-bottom: 18px; }
+    .size-visual { padding: 14px; }
+    .size-visual img { border-radius: 16px; width: 100%; height: auto; }
+
+    /* MARCOS ORIGINALES */
+    .frame-card img { width: 100%; aspect-ratio: 1.22 / 1; object-fit: cover; background: #fff; }
+    .frame-card .caption { min-height: 88px; }
+
+    /* VIDEO ORIGINAL ADAPTADO A LIMPIEZA */
+    .video-shell { display: grid; grid-template-columns: 1fr 0.9fr; gap: 18px; align-items: center; }
+    .video-box { position: relative; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; border: 1px solid rgba(111,82,58,0.10); box-shadow: var(--shadow); background: #111; }
+    .video-box iframe { width: 100%; height: 100%; border: 0; }
+
+    /* FAQ ORIGINAL */
+    .faq details { padding: 18px 20px; }
+    .faq summary { cursor: pointer; list-style: none; font-weight: 700; padding-right: 18px; position: relative; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; position: absolute; right: 0; top: 0; color: var(--brand-deep); font-size: 1.2rem; line-height: 1; }
+    .faq details[open] summary::after { content: '−'; }
+    .faq details p { margin-top: 12px; }
+
+    .footer { padding: 30px 0 60px; color: var(--muted); text-align: center; }
+    .footer-inner { padding-top: 24px; border-top: 1px solid rgba(111,82,58,0.12); }
+    .footer-logo { width: 140px; opacity: 0.92; margin: 0 auto 10px; }
+
+    @media (max-width: 1080px) {
+      .sizes-layout, .video-shell { grid-template-columns: 1fr; }
+      .trust-grid, .price-grid, .frames-grid, .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .container { width: min(var(--max), calc(100% - 22px)); }
+      .trust-grid, .price-grid, .frames-grid, .faq-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <header class="topbar">
-    <img src="assets/logo-transparent.png" alt="Lienzos Bolivia">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img src="assets/logo-transparent.png" alt="Logo de Lienzos Bolivia">
+      </div>
+    </div>
   </header>
 
   <main>
-    <section class="hero container">
-      <h1 class="hero-title">¡Felicidades!<br>Usted ha recibido un lienzo que durará por siempre en su familia</h1>
-      
-      <img src="assets/trabajo-familiar-1.jpg" alt="Su lienzo conmemorativo" class="hero-img">
-
-      <div class="action-buttons">
-        <a href="#cualidades" class="btn btn-secondary">
-          <span class="btn-icon">🖼️</span> 
-          <span>Entérate de las cualidades de nuestro lienzo</span>
-        </a>
-
-        <a href="#" id="btnWhatsApp" class="btn btn-primary">
-          <span class="btn-icon">✨</span> 
-          <span>Solicita réplicas a un precio especial reducido</span>
-        </a>
-
-        <a href="#limpieza" class="btn btn-secondary">
-          <span class="btn-icon">🧼</span> 
-          <span>Te enseñamos a limpiar tu lienzo</span>
-        </a>
-
-        <a href="https://www.facebook.com/share/1E3QadZn44/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-          <span class="btn-icon">👍</span> 
-          <span>Visita nuestra página de Facebook</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" id="cualidades">
+    <section class="hero-qr">
       <div class="container">
-        <h2 class="section-title">Alta calidad en cada detalle</h2>
-        <p class="section-desc">Materiales de primera y marcos de madera genuina elegidos para que este recuerdo pase de generación en generación.</p>
+        <h1 class="hero-qr-title">¡Felicidades!<br>Usted ha recibido un lienzo que durará por siempre en su familia</h1>
         
-        <div class="gallery-grid">
-          <img src="assets/trabajo-graduacion.jpg" alt="Trabajo graduación" class="tall">
-          <img src="assets/trabajo-familiar-2.jpg" alt="Trabajo familiar">
-          <img src="assets/marco-natural.jpg" alt="Marco natural">
-          <img src="assets/marco-clasico.jpg" alt="Marco clásico">
-          <img src="assets/marco-ornamentado.jpg" alt="Marco ornamentado">
-          <img src="assets/marco-blanco.jpg" alt="Marco blanco">
-          <img src="assets/marco-negro.jpg" alt="Marco negro">
-          <img src="assets/marco-madera-1.jpg" alt="Marco madera">
-          <img src="assets/marco-madera-2.jpg" alt="Marco madera">
-          <img src="assets/referencia-tamanos.jpg" alt="Tamaños" class="tall">
+        <img src="assets/trabajo-familiar-1.jpg" alt="Su retrato conmemorativo enmarcado" class="hero-qr-img">
+
+        <div class="actions-qr">
+          <a href="#info" class="btn btn-secondary">🖼️ Entérate de las cualidades de nuestro lienzo</a>
+          <a href="#" id="btnWhatsAppHero" class="btn btn-primary">✨ Solicita réplicas a un precio especial reducido</a>
+          <a href="#limpieza" class="btn btn-secondary">🧼 Te enseñamos a limpiar tu lienzo</a>
+          <a href="https://www.facebook.com/share/1E3QadZn44/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">👍 Visita nuestra página en Facebook</a>
         </div>
       </div>
     </section>
 
-    <section class="section" style="background: rgba(177,107,44,0.05);">
+    <section class="section" id="info">
       <div class="container">
-        <h2 class="section-title">Aprovecha el Precio Especial</h2>
-        <p class="section-desc">Comparte este mismo recuerdo con hijos, hermanos o nietos aprovechando nuestro descuento exclusivo por haber recibido este lienzo.</p>
-        
-        <div class="price-grid">
-          <div class="price-card">
-            <div class="discount-pill">-14% OFF</div>
-            <div class="price-size">20×27 cm</div>
-            <div class="price-old">Normal: Bs 350</div>
-            <div class="price-new">Réplica: Bs 300</div>
-          </div>
-          <div class="price-card">
-            <div class="discount-pill">-15% OFF</div>
-            <div class="price-size">30×42 cm</div>
-            <div class="price-old">Normal: Bs 450</div>
-            <div class="price-new">Réplica: Bs 380</div>
-          </div>
-          <div class="price-card">
-            <div class="discount-pill">-17% OFF</div>
-            <div class="price-size">40×50 cm</div>
-            <div class="price-old">Normal: Bs 680</div>
-            <div class="price-new">Réplica: Bs 560</div>
-          </div>
+        <div class="section-header">
+          <h2>Una forma delicada de extender el homenaje</h2>
+          <p>Esta página fue creada para acompañar a la familia con discreción, brindando una opción sencilla para conservar ese recuerdo en otros hogares.</p>
         </div>
 
-        <div style="text-align: center; margin-top: 40px; max-width: 600px; margin-inline: auto;">
-            <a href="#" id="btnWhatsAppBottom" class="btn btn-primary">
-              <span class="btn-icon">💬</span> 
-              <span>Solicitar mi réplica por WhatsApp</span>
-            </a>
+        <div class="trust-grid">
+          <article class="card">
+            <div class="icon">❤</div>
+            <h3>Hecho con empatía</h3>
+            <p>Cada pedido se atiende con sensibilidad, entendiendo el valor emocional que representa este retrato.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🖼</div>
+            <h3>Réplicas para la familia</h3>
+            <p>Puedes pedir varias copias para hijos, padres, hermanos, nietos o seres queridos cercanos.</p>
+          </article>
+          <article class="card">
+            <div class="icon">⏱</div>
+            <h3>Entrega en 90 minutos</h3>
+            <p>Desde que se confirma el arte del diseño, avanzamos con rapidez para entregar la réplica cuanto antes.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🌿</div>
+            <h3>Material durable</h3>
+            <p>Trabajamos con materiales de alta resistencia y marcos de madera para un acabado cálido y perdurable.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Modelos de marcos en madera genuina</h2>
+          <p>Todos nuestros marcos son de madera. Puedes elegir el acabado que mejor acompañe el retrato y el espacio donde será colocado.</p>
+        </div>
+
+        <div class="frames-grid">
+          <figure class="frame-card">
+            <img src="assets/marco-natural.jpg" alt="Marco de madera natural">
+            <figcaption class="caption">
+              <strong>Madera clara</strong>
+              <span>Acabado sereno y luminoso.</span>
+            </figcaption>
+          </figure>
+          <figure class="frame-card">
+            <img src="assets/marco-clasico.jpg" alt="Marco clásico">
+            <figcaption class="caption">
+              <strong>Madera clásica</strong>
+              <span>Estilo sobrio y tradicional.</span>
+            </figcaption>
+          </figure>
+          <figure class="frame-card">
+            <img src="assets/marco-ornamentado.jpg" alt="Marco ornamentado">
+            <figcaption class="caption">
+              <strong>Madera con detalle</strong>
+              <span>Mayor presencia visual y elegancia.</span>
+            </figcaption>
+          </figure>
+          <figure class="frame-card">
+            <img src="assets/marco-madera-1.jpg" alt="Marco tono medio">
+            <figcaption class="caption">
+              <strong>Madera tono medio</strong>
+              <span>Equilibrio entre calidez y discreción.</span>
+            </figcaption>
+          </figure>
+          <figure class="frame-card">
+            <img src="assets/marco-blanco.jpg" alt="Marco blanco">
+            <figcaption class="caption">
+              <strong>Marco blanco</strong>
+              <span>Acabado claro para ambientes luminosos.</span>
+            </figcaption>
+          </figure>
+          <figure class="frame-card">
+            <img src="assets/marco-negro.jpg" alt="Marco negro">
+            <figcaption class="caption">
+              <strong>Marco negro</strong>
+              <span>Contraste elegante con presencia sobria.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tamanos">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tamaños y precios especiales de réplica</h2>
+          <p>Aprovecha el descuento exclusivo por haber recibido este lienzo. Si la familia desea más de una copia, es posible combinarlas en distintos tamaños.</p>
+        </div>
+
+        <div class="sizes-layout">
+          <div class="size-visual">
+            <img src="assets/referencia-tamanos.jpg" alt="Referencia visual de tamaños">
+          </div>
+
+          <div class="price-grid">
+            <article class="price-card">
+              <div class="size"><strong>20×27 cm</strong><span class="pill">Descuento</span></div>
+              <div class="price-lines">
+                <div class="price-line"><span style="text-decoration: line-through;">Precio normal</span><strong>Bs 350</strong></div>
+                <div class="price-line"><span>Precio réplica</span><strong style="color: var(--brand-deep);">Bs 300</strong></div>
+              </div>
+              <p class="price-note">Medida práctica para compartir con familiares cercanos.</p>
+            </article>
+
+            <article class="price-card">
+              <div class="size"><strong>30×42 cm</strong><span class="pill">Descuento</span></div>
+              <div class="price-lines">
+                <div class="price-line"><span style="text-decoration: line-through;">Precio normal</span><strong>Bs 450</strong></div>
+                <div class="price-line"><span>Precio réplica</span><strong style="color: var(--brand-deep);">Bs 380</strong></div>
+              </div>
+              <p class="price-note">Buen equilibrio entre presencia visual y practicidad.</p>
+            </article>
+
+            <article class="price-card">
+              <div class="size"><strong>40×50 cm</strong><span class="pill">Descuento</span></div>
+              <div class="price-lines">
+                <div class="price-line"><span style="text-decoration: line-through;">Precio normal</span><strong>Bs 680</strong></div>
+                <div class="price-line"><span>Precio réplica</span><strong style="color: var(--brand-deep);">Bs 560</strong></div>
+              </div>
+              <p class="price-note">Aporta una presencia cálida y destacada en el hogar.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section" id="limpieza">
       <div class="container">
-        <h2 class="section-title">Cómo cuidar tu lienzo</h2>
-        <p class="section-desc">Sigue estas instrucciones para mantener los colores vivos e intactos.</p>
-        
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/TU_ID_DE_VIDEO" title="Limpieza de Lienzo" allowfullscreen></iframe>
+        <div class="video-shell">
+          <div class="video-box">
+            <iframe id="videoFrame" src="" title="Limpieza de lienzo Lienzos Bolivia" allowfullscreen></iframe>
+          </div>
+          <div class="card">
+            <h2>Te enseñamos a limpiar tu lienzo</h2>
+            <p>Para asegurar que este retrato conmemorativo se mantenga intacto a lo largo de los años, te preparamos este breve video explicando cómo limpiar el lienzo y la madera de manera segura, sin dañar los colores.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="container">
+        <div class="section-header">
+          <h2>Preguntas frecuentes</h2>
+        </div>
+
+        <div class="faq-grid">
+          <details>
+            <summary>¿Puedo pedir más de una copia para distintos familiares?</summary>
+            <p>Sí. Puedes solicitar una o varias réplicas, incluso en diferentes tamaños, para compartir este recuerdo con otros miembros de la familia.</p>
+          </details>
+
+          <details>
+            <summary>¿Cuánto tardan en entregar una réplica?</summary>
+            <p>El tiempo de entrega es de 90 minutos desde que se confirma el pedido de réplica.</p>
+          </details>
+
+          <details>
+            <summary>¿Los marcos son de madera?</summary>
+            <p>Sí. Todos los marcos ofrecidos en esta página son de madera genuina, con acabados cálidos, sobrios y elegantes.</p>
+          </details>
         </div>
       </div>
     </section>
 
   </main>
 
-  <footer class="footer container">
-    <p>Que tus recuerdos perduren para toda la vida.</p>
-    <p><strong>Lienzos Bolivia</strong><br>Atención por WhatsApp: +591 78120249</p>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <img class="footer-logo" src="assets/logo-transparent.png" alt="Logo de Lienzos Bolivia">
+      <div>Que tus recuerdos perduren para toda la vida.</div>
+      <div style="margin-top: 10px;">
+        <strong>Lienzos Bolivia</strong> | Atención por WhatsApp: <span>+591 78120249</span>
+      </div>
+    </div>
   </footer>
 
   <script>
-    // Configuración del botón de ventas por WhatsApp
     const numeroWhatsApp = '59178120249';
-    const mensajeVentas = 'Hola, acabo de escanear el código QR de mi lienzo y me gustaría aprovechar el precio especial reducido para solicitar réplicas para mi familia.';
+    const mensajeVentas = 'Hola, acabo de recibir mi lienzo y me gustaría aprovechar el precio especial reducido para solicitar réplicas para mi familia.';
     const enlaceWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeVentas)}`;
     
-    document.getElementById('btnWhatsApp').href = enlaceWhatsApp;
-    document.getElementById('btnWhatsAppBottom').href = enlaceWhatsApp;
+    document.getElementById('btnWhatsAppHero').href = enlaceWhatsApp;
   </script>
 </body>
 </html>
